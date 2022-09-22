@@ -11,9 +11,10 @@ class Deck { // use let ___ = new Deck() to call this class and all of its insid
     this.cards = []
     this.createDeck()
     this.shuffle()
+    this.draw()
   }
 
-  createDeck(){
+  createDeck(){ // this creates a new deck with cards going up to 13 in 4 different suits 
     let suits = ["Heart", "Spade", "Club", "Diamond"];
     let ranks = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace"];
 
@@ -33,8 +34,8 @@ class Deck { // use let ___ = new Deck() to call this class and all of its insid
       randomIndex = Math.floor(Math.random() * currentIndex);
       currentIndex--;
   
-      [this.cards[currentIndex], this.cards[randomIndex]] = [
-        this.cards[randomIndex], this.cards[currentIndex]];
+      [this.cards[currentIndex], this.cards[randomIndex]] =[
+      this.cards[randomIndex], this.cards[currentIndex]];
     }
   
     return this.cards;
@@ -52,18 +53,51 @@ class GameofWar { // this is going to start/setup the game, we call this and ass
     this.pile = [] // this array is just the pile of cards 
     this.gameSetup() // this is the function that will basically do everything for the game 
   }
+
   gameSetup() {
-    this.gameDeck = new Deck() // making gameDeck a copy of the Deck class and all its functions 
-    this.cards = this.gameDeck.cards // this.gameDeck.cards to access the deck of cards for the game
-    this.playerOne = this.gameDeck.cards.slice(0, this.gameDeck.cards.length / 2) // split the game deck in half and gave those cards to player one
-    console.log(this.playerOne)
-    this.playerTwo = this.gameDeck.cards.slice(this.gameDeck.cards.length / 2) // split the deck again and gave these cards to player 2 
+    let gameDeck = new Deck() // making gameDeck a copy of the Deck class and all its functions 
+    let cards = gameDeck.cards // this.gameDeck.cards to access the deck of cards for the game
+    this.playerOne = cards.slice(0, cards.length / 2) // split the game deck in half and gave those cards to player one
+    // console.log(this.playerOne)
+    this.playerTwo = cards.slice(cards.length / 2) // split the deck again and gave these cards to player 2 
+    // console.log(this.playerTwo)
   } 
+
+  startGame() {
+    let playerOne = this.playerOne.pop()
+    let playerTwo = this.playerTwo.pop()
+
+
+    if (playerOne.score > playerTwo.score) {
+      console.log('Player One Wins!')
+      this.playerOne.unshift(playerOne, playerTwo, ...this.pile) // gives the card to player if they win
+      this.pile.length = 0 // so the cards dont duplicate
+    } else if (playerTwo.score > playerOne.score) {
+      console.log('Player Two Wins!')
+      this.playerTwo.unshift(playerTwo, playerOne, ...this.pile) // gives the card to the player if they win
+      this.pile.length = 0 // so the cards do not duplicate
+    } else {
+      console.log("WAR")
+      this.war(playerOne , playerTwo)
+    }
+  }
+
+  war(card1, card2) {
+    this.pile.push(card1, card2)
+    if (this.playerOne.length >= 4 && this.playerTwo.length >= 4) {
+      this.pile.push(...this.playerOne.splice(this.playerOne.length - 3, 3))
+      this.pile.push(...this.playerTwo.splice(this.playerTwo.length - 3, 3))
+    } else {
+      if (this.playerOne.length < 4 && this.playerTwo.length < 4) {
+console.log('You both lose!')
+      }
+    }
+    
+  }
 }
 
-class PlayGame {
-  constructor()
 
-}
 
-let startGame = new GameofWar()
+let game = new GameofWar()
+game.startGame()
+// let game = new Playing()
