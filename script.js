@@ -84,15 +84,16 @@ class GameofWar { // this is going to start/setup the game, we call this and ass
 
   war(card1, card2) {
     this.pile.push(card1, card2)
-    if (this.playerOne.length >= 4 && this.playerTwo.length >= 4) {
-      this.pile.push(...this.playerOne.splice(this.playerOne.length - 3, 3))
-      this.pile.push(...this.playerTwo.splice(this.playerTwo.length - 3, 3))
-    } else {
-      if (this.playerOne.length < 4 && this.playerTwo.length < 4) {
-console.log('You both lose!')
+    if (this.playerOne.length >= 4 && this.playerTwo.length >= 4) { 
+      this.pile.push(...this.playerOne.splice(this.playerOne.length - 3, 3)) // pushing cards into the pile for war 
+      this.pile.push(...this.playerTwo.splice(this.playerTwo.length - 3, 3)) // pushing cards into the pile for war 
+    } else if (this.playerOne.length < 4 && this.playerTwo.length < 4) { // dumb impossible situation that cant happen 
+        console.log('You both lose!')
+    } else if (this.playerOne.length < 4){ // an instance where player 1 doesnt have enough cards to continue 
+      console.log('Player 1 Loses, congratulations Player 2!')
+    } else if (this.playerTwo.length < 4) { // player two doesnt have enough cards to continue
+      console.log('Player 2 Loses, congratulations Player 1!')
       }
-    }
-    
   }
 }
 
