@@ -46,3 +46,9 @@ class Deck {
 
 let gamblerDeck = new Deck()
 console.log(gamblerDeck)
+
+class GameofWar {
+  constructor() {
+    
+  }
+}
