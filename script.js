@@ -52,11 +52,11 @@ class GameofWar { // this is going to start/setup the game, we call this and ass
     this.gameSetup() // this is the function that will basically do everything for the game 
   }
   gameSetup() {
-    this.gameDeck = new Deck() 
-    this.cards = this.gameDeck.cards
+    this.gameDeck = new Deck() // making gameDeck a copy of the Deck class and all its functions 
+    this.cards = this.gameDeck.cards // this.gameDeck.cards to access the deck of cards for the game
     // return this.playerTwo , this.playerOne
     console.log(this.gameDeck.cards)
   } 
 }
 
-// let startGame = new GameofWar()
+let startGame = new GameofWar()
