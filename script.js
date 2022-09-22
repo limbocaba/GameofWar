@@ -1,4 +1,4 @@
-class Card {
+class Card { // this just creates new cards for the game
   constructor(suit, rank, score){
     this.suit = suit
     this.rank = rank
@@ -6,7 +6,7 @@ class Card {
   }
 }
 
-class Deck {
+class Deck { // use let ___ = new Deck() to call this class and all of its inside functions 
   constructor(){
     this.cards = []
     this.createDeck()
@@ -25,7 +25,7 @@ class Deck {
     return this.cards
   }
 
-  shuffle() {
+  shuffle() { // this shuffles the deck, not too knowledgable on it but it works 
     let currentIndex = this.cards.length,  randomIndex;
   
     while (currentIndex != 0) {
@@ -44,11 +44,19 @@ class Deck {
   }
 }
 
-let gamblerDeck = new Deck()
-console.log(gamblerDeck)
-
-class GameofWar {
+class GameofWar { // this is going to start/setup the game, we call this and assign it when we want the game to start
   constructor() {
-    
+    this.playerOne = [] // this array is will hold player 1's 26 cards 
+    this.playerTwo = [] // this array will hold player 2's 26 cards 
+    this.pile = [] // this array is just the pile of cards 
+    this.gameSetup() // this is the function that will basically do everything for the game 
   }
+  gameSetup() {
+    this.gameDeck = new Deck() 
+    this.cards = this.gameDeck.cards
+    // return this.playerTwo , this.playerOne
+    console.log(this.gameDeck.cards)
+  } 
 }
+
+// let startGame = new GameofWar()
