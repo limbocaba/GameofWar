@@ -10,6 +10,7 @@ class Deck { // use let ___ = new Deck() to call this class and all of its insid
   constructor(){
     this.cards = []
     this.createDeck()
+    this.shuffle()
   }
 
   createDeck(){
@@ -54,9 +55,15 @@ class GameofWar { // this is going to start/setup the game, we call this and ass
   gameSetup() {
     this.gameDeck = new Deck() // making gameDeck a copy of the Deck class and all its functions 
     this.cards = this.gameDeck.cards // this.gameDeck.cards to access the deck of cards for the game
-    // return this.playerTwo , this.playerOne
-    console.log(this.gameDeck.cards)
+    this.playerOne = this.gameDeck.cards.slice(0, this.gameDeck.cards.length / 2) // split the game deck in half and gave those cards to player one
+    console.log(this.playerOne)
+    this.playerTwo = this.gameDeck.cards.slice(this.gameDeck.cards.length / 2) // split the deck again and gave these cards to player 2 
   } 
+}
+
+class PlayGame {
+  constructor()
+
 }
 
 let startGame = new GameofWar()
