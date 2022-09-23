@@ -64,41 +64,53 @@ class GameofWar { // this is going to start/setup the game, we call this and ass
   } 
 
   startGame() {
+    while (this.playerOne.length > 0 && this.playerTwo.length > 0) {
     let playerOne = this.playerOne.pop()
     let playerTwo = this.playerTwo.pop()
 
 
-    if (playerOne.score > playerTwo.score) {
-      console.log('Player One Wins!')
-      this.playerOne.unshift(playerOne, playerTwo, ...this.pile) // gives the card to player if they win
-      this.pile.length = 0 // so the cards dont duplicate
-    } else if (playerTwo.score > playerOne.score) {
-      console.log('Player Two Wins!')
-      this.playerTwo.unshift(playerTwo, playerOne, ...this.pile) // gives the card to the player if they win
-      this.pile.length = 0 // so the cards do not duplicate
+      if (playerOne.score > playerTwo.score) {
+        console.log('Player One Wins!')
+        this.playerOne.unshift(playerOne, playerTwo, ...this.pile) // gives the card to player if they win
+        this.pile.length = 0 // so the cards dont duplicate
+      } else if (playerTwo.score > playerOne.score) {
+        console.log('Player Two Wins!')
+        this.playerTwo.unshift(playerTwo, playerOne, ...this.pile) // gives the card to the player if they win
+        this.pile.length = 0 // so the cards do not duplicate
+      } else {
+        console.log("WAR")
+        this.war(playerOne, playerTwo)
+      }
+    }
+    if (this.playerOne.length > 0) {
+      console.log("Player One Wins the Game of War!")
     } else {
-      console.log("WAR")
-      this.war(playerOne , playerTwo)
+      console.log("Player Two Wins the Game of War!")
     }
   }
 
   war(card1, card2) {
     this.pile.push(card1, card2)
-    if (this.playerOne.length >= 4 && this.playerTwo.length >= 4) { 
+
+    if (this.playerOne.length >= 4 && this.playerTwo.length >= 4) {
       this.pile.push(...this.playerOne.splice(this.playerOne.length - 3, 3)) // pushing cards into the pile for war 
       this.pile.push(...this.playerTwo.splice(this.playerTwo.length - 3, 3)) // pushing cards into the pile for war 
-    } else if (this.playerOne.length < 4 && this.playerTwo.length < 4) { // dumb impossible situation that cant happen 
-        console.log('You both lose!')
-    } else if (this.playerOne.length < 4){ // an instance where player 1 doesnt have enough cards to continue 
-      console.log('Player 1 Loses, congratulations Player 2!')
-    } else if (this.playerTwo.length < 4) { // player two doesnt have enough cards to continue
-      console.log('Player 2 Loses, congratulations Player 1!')
-      }
+    } else if (this.playerOne.length < 4 && this.playerTwo.length >= 4) { // dumb impossible situation that cant happen 
+      this.playerOne.unshift(...this.pile)
+      this.playerOne.unshift(...this.playerTwo)
+      this.playerTwo.length = 0;
+      this.pile.length = 0;
+    } else {
+      this.playerTwo.unshift(...this.pile)
+      this.playerTwo.unshift(...this.playerOne)
+      this.playerOne.length = 0;
+      this.pile.length = 0;
+    }
   }
 }
 
 
 
 let game = new GameofWar()
-game.startGame()
+console.log(game.startGame())
 // let game = new Playing()
