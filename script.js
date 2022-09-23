@@ -11,7 +11,6 @@ class Deck { // use let ___ = new Deck() to call this class and all of its insid
     this.cards = []
     this.createDeck()
     this.shuffle()
-    this.draw()
   }
 
   createDeck(){ // this creates a new deck with cards going up to 13 in 4 different suits 
@@ -40,10 +39,6 @@ class Deck { // use let ___ = new Deck() to call this class and all of its insid
   
     return this.cards;
   }
-
-  draw(){
-    return this.cards.pop()
-  }
 }
 
 class GameofWar { // this is going to start/setup the game, we call this and assign it when we want the game to start
@@ -55,37 +50,40 @@ class GameofWar { // this is going to start/setup the game, we call this and ass
   }
 
   gameSetup() {
-    let gameDeck = new Deck() // making gameDeck a copy of the Deck class and all its functions 
+    let gameDeck = new Deck()
+    console.log(gameDeck.cards.length, 'length here:') // making gameDeck a copy of the Deck class and all its functions
     let cards = gameDeck.cards // this.gameDeck.cards to access the deck of cards for the game
-    this.playerOne = cards.slice(0, cards.length / 2) // split the game deck in half and gave those cards to player one
+    this.playerOne.push(...cards.slice(0, cards.length / 2)) // split the game deck in half and gave those cards to player one
     // console.log(this.playerOne)
-    this.playerTwo = cards.slice(cards.length / 2) // split the deck again and gave these cards to player 2 
+    this.playerTwo.push(...cards.slice(cards.length / 2)) // split the deck again and gave these cards to player 2 
     // console.log(this.playerTwo)
   } 
 
   startGame() {
     while (this.playerOne.length > 0 && this.playerTwo.length > 0) {
-    let playerOne = this.playerOne.pop()
-    let playerTwo = this.playerTwo.pop()
+    let p1card = this.playerOne.pop()
+    let p2card = this.playerTwo.pop()
 
 
-      if (playerOne.score > playerTwo.score) {
-        console.log('Player One Wins!')
-        this.playerOne.unshift(playerOne, playerTwo, ...this.pile) // gives the card to player if they win
+      if (p1card.score > p2card.score) {
+        console.log('Player One Wins!', `Player One : ${this.playerOne.rank} Player Two: ${this.playerTwo.rank}`)
+        this.playerOne.unshift(p1card, p2card, ...this.pile) // gives the card to player if they win
+        console.log(this.playerOne.length , this.playerTwo.length)
         this.pile.length = 0 // so the cards dont duplicate
-      } else if (playerTwo.score > playerOne.score) {
-        console.log('Player Two Wins!')
-        this.playerTwo.unshift(playerTwo, playerOne, ...this.pile) // gives the card to the player if they win
+      } else if (p2card.score > p1card.score) {
+        console.log('Player Two Wins!', `Player One : ${this.playerOne.length} Player Two: ${this.playerTwo.length}` )
+        this.playerTwo.unshift(p2card, p1card, ...this.pile) // gives the card to the player if they win
+        console.log(this.playerOne.length , this.playerTwo.length)
         this.pile.length = 0 // so the cards do not duplicate
-      } else {
+      } else if (p1card.score === p2card.score) {
         console.log("WAR")
-        this.war(playerOne, playerTwo)
+        this.war(p1card, p2card)
       }
     }
-    if (this.playerOne.length > 0) {
-      console.log("Player One Wins the Game of War!")
+    if (this.playerOne.length <= 0) {
+      console.log("Player Two Wins the Game of War!" , this.playerTwo.length)
     } else {
-      console.log("Player Two Wins the Game of War!")
+      console.log("Player One Wins the Game of War!" , this.playerOne.length)
     }
   }
 
@@ -93,17 +91,18 @@ class GameofWar { // this is going to start/setup the game, we call this and ass
     this.pile.push(card1, card2)
 
     if (this.playerOne.length >= 4 && this.playerTwo.length >= 4) {
-      this.pile.push(...this.playerOne.splice(this.playerOne.length - 3, 3)) // pushing cards into the pile for war 
-      this.pile.push(...this.playerTwo.splice(this.playerTwo.length - 3, 3)) // pushing cards into the pile for war 
+      let pile1 = this.playerOne.splice(this.playerOne.length - 3, 3) // pushing cards into the pile for war 
+      let pile2 = this.playerTwo.splice(this.playerTwo.length - 3, 3) // pushing cards into the pile for war 
+      this.pile.push(...pile1, ...pile2)
     } else if (this.playerOne.length < 4 && this.playerTwo.length >= 4) { // dumb impossible situation that cant happen 
-      this.playerOne.unshift(...this.pile)
-      this.playerOne.unshift(...this.playerTwo)
-      this.playerTwo.length = 0;
-      this.pile.length = 0;
-    } else {
       this.playerTwo.unshift(...this.pile)
-      this.playerTwo.unshift(...this.playerOne)
-      this.playerOne.length = 0;
+      this.playerTwo.unshift(...this.playerOne.splice(0 , this.playerOne.length))
+      // this.playerOne.length = 0;
+      this.pile.length = 0;
+    } else  if (this.playerTwo.length < 4 && this.playerOne.length >= 4) {
+      this.playerOne.unshift(...this.pile)
+      this.playerOne.unshift(...this.playerTwo.splice(0 , this.playerTwo.length))
+      this.playerTwo.length = 0;
       this.pile.length = 0;
     }
   }
@@ -112,5 +111,5 @@ class GameofWar { // this is going to start/setup the game, we call this and ass
 
 
 let game = new GameofWar()
-console.log(game.startGame())
+game.startGame()
 // let game = new Playing()
