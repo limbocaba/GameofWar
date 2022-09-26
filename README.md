@@ -1,6 +1,6 @@
 # Game of War
 
-Run `node script.js` to start the game!
+Run `node script.js` in your terminal to see the round results!
 
 _Here we have my Game of War card game simulation. Only available in the console/terminal, this code puts the computer against itself to see which player can obtain all 52 cards._
 
