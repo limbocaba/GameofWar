@@ -51,7 +51,7 @@ class GameofWar { // this is going to start/setup the game, we call this and ass
 
   gameSetup() {
     let gameDeck = new Deck()
-    console.log(gameDeck.cards.length, 'length here:') // making gameDeck a copy of the Deck class and all its functions
+    console.log('Starting Number of Cards:',gameDeck.cards.length) // making gameDeck a copy of the Deck class and all its functions
     let cards = gameDeck.cards // this.gameDeck.cards to access the deck of cards for the game
     this.playerOne.push(...cards.slice(0, cards.length / 2)) // split the game deck in half and gave those cards to player one
     // console.log(this.playerOne)
@@ -66,13 +66,13 @@ class GameofWar { // this is going to start/setup the game, we call this and ass
 
 
       if (p1card.score > p2card.score) {
-        console.log('Player One Wins!', `Player One : ${this.playerOne.rank} Player Two: ${this.playerTwo.rank}`)
         this.playerOne.unshift(p1card, p2card, ...this.pile) // gives the card to player if they win
+        console.log('Player One Wins!', `Player One : ${this.playerOne.length} | Player Two: ${this.playerTwo.length}`)
         console.log(this.playerOne.length , this.playerTwo.length)
         this.pile.length = 0 // so the cards dont duplicate
       } else if (p2card.score > p1card.score) {
-        console.log('Player Two Wins!', `Player One : ${this.playerOne.length} Player Two: ${this.playerTwo.length}` )
         this.playerTwo.unshift(p2card, p1card, ...this.pile) // gives the card to the player if they win
+        console.log('Player Two Wins!', `Player One : ${this.playerOne.length} | Player Two: ${this.playerTwo.length}` )
         console.log(this.playerOne.length , this.playerTwo.length)
         this.pile.length = 0 // so the cards do not duplicate
       } else if (p1card.score === p2card.score) {
@@ -107,9 +107,8 @@ class GameofWar { // this is going to start/setup the game, we call this and ass
     }
   }
 }
-
-
-
 let game = new GameofWar()
 game.startGame()
-// let game = new Playing()
+
+
+
